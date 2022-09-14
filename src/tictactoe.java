@@ -6,6 +6,16 @@ import java.util.Scanner;
 public class tictactoe {
 
     public static void main(String[] args) {
+        int [][] combinations = new int[8][];
+        combinations[0] = new int[]{0,1,2};
+        combinations[1] = new int[]{3,4,5};
+        combinations[2] = new int[]{6,7,8};
+        combinations[3] = new int[]{0,3,6};
+        combinations[4] = new int[]{1,4,7};
+        combinations[5] = new int[]{2,5,8};
+        combinations[6] = new int[]{0,4,8};
+        combinations[7] = new int[]{2,4,6};
+
         char[] chars = new char[]{'1', '2', '3', '4', '5', '6', '7', '8', '9'};
         System.out.println("добро пожаловать");
         printField(chars);
@@ -15,7 +25,20 @@ public class tictactoe {
 
 
         while (!isFieldFull(chars)){
-            System.out.println("введите куда вы хотите поставить крестик");
+            if (hasWinner(combinations,chars)) {
+                System.out.println("we have winner !!!!");
+                break;
+            }
+
+            if (isFirstPlayer) {
+                System.out.println("введите куда вы хотите поставить крестик ");
+            } else {
+                System.out.println("введите куда вы хотите поставить нолик  ");
+
+            }
+
+
+
             Scanner scanner = new Scanner(System.in);
             int answer = scanner.nextInt() -1;
 
@@ -38,6 +61,37 @@ public class tictactoe {
 
 
     }
+    public static boolean hasWinner(int[][] combinations,char[] chars ) {
+        for (int i = 0; i < combinations.length ; i++) {
+            int[] combination = combinations [i];
+            boolean zeroIsWinner = zeroIsWinner(combination, chars);
+            boolean exIsWinner = exIsWinner (combination,chars);
+            if (zeroIsWinner || exIsWinner) {
+                return true;
+
+            }
+            return false;
+
+            }
+
+
+            
+        }
+
+        
+    }
+    public static boolean zeroIsWinner (int[] combination, char chars){
+        int positionOne = combination[0];
+        int positionTwo = combination[1];
+        int positionThree = combination[2];
+        return chars [positionOne] == '0' && chars [positionTwo] == '0' && chars [positionThree == '0'];
+    }
+    public static boolean exIsWinner (int[] combination, char chars){
+        int positionOne = combination[0];
+        int positionTwo = combination[1];
+        int positionThree = combination[2];
+        return chars [positionOne] == 'X' && chars [positionTwo] == 'X' && chars [positionThree == 'X'];
+    }
 
     public static boolean isFieldFull(char[]chars){
 
@@ -51,6 +105,11 @@ public class tictactoe {
         
         
     }
+
+
+
+
+
 
     public static void printField(char[] chars) {
         int countFilledRows = 0;
@@ -67,9 +126,9 @@ public class tictactoe {
     }
 
     public static void printMinusRow(){
-        System.out.println("|");
+        System.out.print("|");
         for (int i = 0; i < 23 ; i++) {
-            System.out.println("-");
+            System.out.print("-");
         }
         System.out.println("|");
     }
@@ -80,24 +139,25 @@ public class tictactoe {
 
 
    public static void printFieldRow (int countFieldRows,char[] chars) {
-       System.out.println("|");
+       System.out.print("|");
        int countCells = 1 * countFieldRows;
        int countSpaces = 0;
        for(int i = 0;i < 21;i++){
            if (i % 7 ==0 && i !=0  ) {
-               System.out.println("|");
+               System.out.print("|");
                countSpaces = 0;
        }
          if (countSpaces == 3){
-             System.out.println(chars[countCells]);
+             System.out.print(chars[countCells]);
              countSpaces=0;
              countCells++;
          }else {
-             System.out.println(" ");
+             System.out.print (" ");
              countSpaces++;}
 
 
        }
+       System.out.println("|");
 
    }
 
@@ -127,7 +187,7 @@ public class tictactoe {
 
 
 
-}
+
 
 
 
